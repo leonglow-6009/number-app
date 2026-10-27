@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 专属幸运号码测算系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .glow-card { box-shadow: 0 0 25px -5px rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.2); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-md bg-slate-900/90 backdrop-blur-xl rounded-3xl p-6 glow-card">
+        <!-- 头部 -->
+        <div class="text-center mb-6">
+            <span class="bg-amber-500/10 text-amber-400 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">大马专属运势测算</span>
+            <h1 class="text-2xl font-bold mt-3 text-amber-400">✨ 个人 4D 幸运号码测算</h1>
+            <p class="text-slate-400 text-sm mt-1">输入您的生辰与大马卡后 4 位，破解今日专属密码</p>
+        </div>
+
+        <!-- 表单输入 -->
+        <div id="input-section" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">出生年份 (例如: 1978)</label>
+                <input type="number" id="birth-year" value="1978" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">大马卡 IC 后 4 位号码 (例如: 6009)</label>
+                <input type="text" id="ic-last4" maxlength="4" value="6009" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+            </div>
+            
+            <button onclick="proceedToPayment()" class="w-full mt-2 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 font-bold py-3.5 rounded-xl shadow-lg hover:from-amber-400 hover:to-yellow-400 transition-all cursor-pointer">
+                立即测算 (收费 RM 2.00)
+            </button>
+            <p class="text-center text-xs text-slate-500 mt-2">* 每次测算仅需 RM2.00，支持本地主流电子钱包与网银</p>
+        </div>
+
+        <!-- 支付界面（默认隐藏） -->
+        <div id="payment-section" class="hidden space-y-4">
+            <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700 text-center">
+                <span class="text-slate-400 text-sm">应付金额</span>
+                <div class="text-3xl font-extrabold text-amber-400 my-1">RM 2.00</div>
+                <p class="text-xs text-slate-400">请选择支付方式完成安全交易</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="completePayment()" class="p-3 bg-slate-800 border border-amber-500/30 rounded-xl text-left hover:bg-slate-750 transition cursor-pointer">
+                    <div class="font-bold text-amber-400 text-sm">DuitNow QR</div>
+                    <div class="text-xs text-slate-400">即时扫描过账</div>
+                </button>
+                <button onclick="completePayment()" class="p-3 bg-slate-800 border border-amber-500/30 rounded-xl text-left hover:bg-slate-750 transition cursor-pointer">
+                    <div class="font-bold text-blue-400 text-sm">Touch 'n Go</div>
+                    <div class="text-xs text-slate-400">电子钱包扣款</div>
+                </button>
+            </div>
+
+            <button onclick="cancelPayment()" class="w-full text-slate-400 text-sm py-2 hover:text-white transition">返回修改资料</button>
+        </div>
+
+        <!-- 结果展示界面（默认隐藏） -->
+        <div id="result-section" class="hidden space-y-4 text-center">
+            <div class="bg-slate-800/80 p-6 rounded-2xl border border-amber-500/30">
+                <span class="text-xs text-amber-400 tracking-wider uppercase font-semibold">您的专属 4D 幸运号码</span>
+                <div id="lucky-number-display" class="text-5xl font-black text-amber-300 tracking-widest my-4">----</div>
+                <p id="analysis-text" class="text-sm text-slate-300 leading-relaxed"></p>
+            </div>
+
+            <button onclick="resetApp()" class="w-full bg-slate-800 border border-slate-700 text-slate-300 font-semibold py-3 rounded-xl hover:bg-slate-700 transition cursor-pointer">
+                再次测算新号码
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function proceedToPayment() {
+            const year = document.getElementById('birth-year').value;
+            const ic = document.getElementById('ic-last4').value;
+            if(!year || ic.length !== 4) {
+                alert('请输入完整的出生年份与有效的 IC 后 4 位数字！');
+                return;
+            }
+            document.getElementById('input-section').classList.add('hidden');
+            document.getElementById('payment-section').classList.remove('hidden');
+        }
+
+        function cancelPayment() {
+            document.getElementById('payment-section').classList.add('hidden');
+            document.getElementById('input-section').classList.remove('hidden');
+        }
+
+        function completePayment() {
+            // 运算逻辑
+            const year = parseInt(document.getElementById('birth-year').value);
+            const ic = document.getElementById('ic-last4').value;
+            
+            const yearDigits = String(year).split('').map(Number);
+            const icDigits = ic.split('').map(Number);
+            
+            const d1 = yearDigits.reduce((a,b)=>a+b, 0) % 10;
+            const d2 = (icDigits[0] + icDigits[1]) % 10;
+            const d3 = (icDigits[2] + icDigits[3]) % 10;
+            const d4 = (yearDigits.reduce((a,b)=>a+b, 0) + icDigits.reduce((a,b)=>a+b, 0)) % 10;
+            
+            const luckyNum = `${d1}${d2}${d3}${d4}`;
+            
+            document.getElementById('lucky-number-display').innerText = luckyNum;
+            document.getElementById('analysis-text').innerText = `经系统推算，您本季度的财运指数极高，此组合带有强劲的偏财磁场，适合作为近期参考号码。`;
+
+            document.getElementById('payment-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+        }
+
+        function resetApp() {
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('input-section').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
