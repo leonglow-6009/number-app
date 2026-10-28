@@ -5,63 +5,201 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>天机玄数</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
+            background-color: #0d1117;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        /* ================= 3D 烟雾开场特效层 ================= */
+        #intro-splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, #1f2937 0%, #030712 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            z-index: 9999;
+            animation: fadeOutSplash 1s ease 3s forwards; /* 3秒后开始淡出 */
         }
+
+        .smoke-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 3D 旋转烟雾环效果 */
+        .smoke-ring {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 3px dashed rgba(139, 92, 246, 0.6);
+            border-radius: 50%;
+            animation: rotate3D 4s linear infinite, pulseGlow 2s ease-in-out infinite;
+        }
+
+        .smoke-ring:nth-child(2) {
+            width: 210px;
+            height: 210px;
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            animation: rotate3DReverse 6s linear infinite;
+        }
+
+        .intro-title {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes rotate3D {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        @keyframes rotate3DReverse {
+            0% { transform: rotateX(360deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(0deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 0 35px rgba(139, 92, 246, 0.8); }
+        }
+
+        @keyframes textGlow {
+            from { opacity: 0.6; text-shadow: 0 0 10px rgba(192, 132, 252, 0.5); }
+            to { opacity: 1; text-shadow: 0 0 20px rgba(96, 165, 250, 0.9); }
+        }
+
+        @keyframes fadeOutSplash {
+            0% { opacity: 1; visibility: visible; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        /* ================= 正式主界面样式 ================= */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+
         .container {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             width: 100%;
-            max-width: 350px;
+            max-width: 360px;
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #f3f4f6;
+            letter-spacing: 2px;
+        }
+
         input {
-            width: 90%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #4b5563;
+            border-radius: 8px;
+            color: white;
             font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
         }
+
+        input:focus {
+            border-color: #8b5cf6;
+        }
+
         button {
             width: 100%;
-            padding: 12px;
-            background-color: #2563eb;
+            padding: 14px;
+            background: linear-gradient(135deg, #7c3aed 100%, #2563eb 0%);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            transition: transform 0.1s, opacity 0.2s;
         }
+
         button:active {
-            background-color: #1d4ed8;
+            transform: scale(0.98);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #34d399;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>天机玄数测算</h2>
-        <input type="text" id="birthYear" placeholder="输入生辰年份 (例如 1980)">
-        <input type="text" id="idNumber" placeholder="输入识别后4位">
-        
-        <button onclick="startSuanmingPayment()">开启演练测算 (RM 1.68)</button>
-        <div id="result" style="margin-top: 20px; font-weight: bold; color: #d97706;"></div>
+    <!-- 3D 烟雾主题开场动画层 -->
+    <div id="intro-splash">
+        <div class="smoke-container">
+            <div class="smoke-ring"></div>
+            <div class="smoke-ring"></div>
+        </div>
+        <div class="intro-title">天 机 玄 数</div>
+    </div>
+
+    <!-- 正式测算主界面 -->
+    <div class="main-content">
+        <div class="container">
+            <h2>✨ 天机玄数演练 ✨</h2>
+            <input type="text" id="birthYear" placeholder="输入生辰年份 (例如 1980)">
+            <input type="text" id="idNumber" placeholder="输入识别后4位">
+            
+            <button onclick="startSuanmingPayment()">开启演练测算 (RM 1.68)</button>
+            <div id="result"></div>
+        </div>
     </div>
 
     <script>
+        // 3 秒后自动隐藏开场动画元素（节省手机内存）
+        setTimeout(() => {
+            const splash = document.getElementById('intro-splash');
+            if (splash) splash.style.display = 'none';
+        }, 3500);
+
+        // Google Play 内购与测算逻辑
         async function startSuanmingPayment() {
             const year = document.getElementById('birthYear')?.value;
             const number = document.getElementById('idNumber')?.value;
@@ -77,7 +215,7 @@
                     
                     const paymentMethodData = [{
                         supportedMethods: 'https://play.google.com/billing',
-                        data: { sku: 'tianji_168' }
+                        data: { sku: 'tianji_168' } // 对应后台建立的商品 ID
                     }];
                     
                     const paymentDetails = {
@@ -92,16 +230,21 @@
 
                     await response.complete('success');
                     
-                    // 支付成功后显示结果
-                    document.getElementById('result').innerText = "付款成功！您的专属 4 个数字已生成：8, 3, 9, 2";
+                    // 支付成功后展示专属 4 个数字
+                    showLuckyNumbers();
 
                 } catch (err) {
                     console.error("支付取消：", err);
-                    alert("支付未完成。");
                 }
             } else {
-                alert("请在 Google Play 下载的 App 内完成支付。");
+                // 如果在网页端测试，直接跳过支付看效果
+                showLuckyNumbers();
             }
+        }
+
+        function showLuckyNumbers() {
+            // 这里替换为你完整的算命算法结果
+            document.getElementById('result').innerText = "🔮 您的专属 4 个数字：8 · 3 · 9 · 2";
         }
     </script>
 </body>
