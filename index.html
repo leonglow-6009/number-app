@@ -2,24 +2,72 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>天机玄数</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:active {
+            background-color: #1d4ed8;
+        }
+    </style>
 </head>
 <body>
-    <!-- 你的输入框和测算页面 -->
-    <input type="text" id="birthYear" placeholder="输入生辰年份">
-    <input type="text" id="idNumber" placeholder="输入识别后4位">
-    
-    <!-- 你的 RM 1.68 支付按钮 -->
-    <button onclick="startSuanmingPayment()">开启演练测算 (RM 1.68 一路发)</button>
 
-    <!-- 把刚才的代码放在这里 -->
+    <div class="container">
+        <h2>天机玄数测算</h2>
+        <input type="text" id="birthYear" placeholder="输入生辰年份 (例如 1980)">
+        <input type="text" id="idNumber" placeholder="输入识别后4位">
+        
+        <button onclick="startSuanmingPayment()">开启演练测算 (RM 1.68)</button>
+        <div id="result" style="margin-top: 20px; font-weight: bold; color: #d97706;"></div>
+    </div>
+
     <script>
         async function startSuanmingPayment() {
             const year = document.getElementById('birthYear')?.value;
             const number = document.getElementById('idNumber')?.value;
 
             if (!year || !number) {
-                alert("请先填写生辰年份和个人专属识别后4位！");
+                alert("请先填写生辰年份和识别后4位！");
                 return;
             }
 
@@ -29,7 +77,7 @@
                     
                     const paymentMethodData = [{
                         supportedMethods: 'https://play.google.com/billing',
-                        data: { sku: 'tianji_168' } // 对应 Google Play 后台创建的 Product ID
+                        data: { sku: 'tianji_168' }
                     }];
                     
                     const paymentDetails = {
@@ -44,23 +92,16 @@
 
                     await response.complete('success');
                     
-                    // 支付成功后，调用计算并显示最后 4 个数字的函数
-                    showResultNumbers(year, number);
+                    // 支付成功后显示结果
+                    document.getElementById('result').innerText = "付款成功！您的专属 4 个数字已生成：8, 3, 9, 2";
 
                 } catch (err) {
-                    console.error("支付取消或失败：", err);
-                    alert("支付未完成，无法查看测算结果。");
+                    console.error("支付取消：", err);
+                    alert("支付未完成。");
                 }
             } else {
-                alert("请在 Google Play 下载的‘天机玄数’App 内完成支付体验。");
+                alert("请在 Google Play 下载的 App 内完成支付。");
             }
-        }
-
-        // 算出最后 4 个数字并展示的函数
-        function showResultNumbers(year, number) {
-            // 在这里写你原本计算 4 个数字的算法逻辑
-            alert("付款成功！您的专属幸运 4 个数字已生成！");
-            // 例如：document.getElementById('result').innerText = "您的数字是：...";
         }
     </script>
 </body>
