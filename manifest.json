@@ -6,11 +6,11 @@
   "display": "standalone",
   "background_color": "#0b0f19",
   "theme_color": "#0b0f19",
-  "version": "1.0.1",
-  "versionCode": 2,
+  "version": "1.0.2",
+  "versionCode": 3,
   "icons": [
     {
-      "src": "https://via.placeholder.com/512.png?text=天机玄数",
+      "src": "./icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
