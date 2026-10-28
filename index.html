@@ -9,66 +9,69 @@
             box-sizing: border-box;
         }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #0d1117;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #0b0f19;
+            background-image: radial-gradient(circle at 50% 20%, #1a2238 0%, #0b0f19 100%);
             margin: 0;
             padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #f3f4f6;
+            overflow-x: hidden;
         }
 
-        /* ================= 3D 烟雾开场特效层 ================= */
+        /* ================= 3D 烟雾开场动画层 ================= */
         #intro-splash {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle, #1f2937 0%, #030712 100%);
+            background: #05070b;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            animation: fadeOutSplash 1s ease 3s forwards; /* 3秒后开始淡出 */
+            animation: fadeOutSplash 1s ease 3s forwards; /* 3秒后烟雾散开淡出 */
         }
 
         .smoke-container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 250px;
+            height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* 3D 旋转烟雾环效果 */
         .smoke-ring {
             position: absolute;
-            width: 150px;
-            height: 150px;
-            border: 3px dashed rgba(139, 92, 246, 0.6);
+            width: 140px;
+            height: 140px;
+            border: 3px dashed rgba(234, 179, 8, 0.5);
             border-radius: 50%;
             animation: rotate3D 4s linear infinite, pulseGlow 2s ease-in-out infinite;
         }
 
         .smoke-ring:nth-child(2) {
-            width: 210px;
-            height: 210px;
-            border: 2px solid rgba(59, 130, 246, 0.4);
+            width: 200px;
+            height: 200px;
+            border: 2px solid rgba(217, 119, 6, 0.3);
             animation: rotate3DReverse 6s linear infinite;
         }
 
-        .intro-title {
-            margin-top: 20px;
-            font-size: 24px;
+        .intro-text {
+            margin-top: 25px;
+            font-size: 26px;
             font-weight: bold;
-            letter-spacing: 4px;
-            background: linear-gradient(90deg, #c084fc, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textGlow 1.5s ease-in-out infinite alternate;
+            letter-spacing: 5px;
+            color: #fbbf24;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+            animation: textBreath 1.5s ease-in-out infinite alternate;
         }
 
         @keyframes rotate3D {
@@ -82,13 +85,13 @@
         }
 
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); }
-            50% { box-shadow: 0 0 35px rgba(139, 92, 246, 0.8); }
+            0%, 100% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.3); }
+            50% { box-shadow: 0 0 35px rgba(234, 179, 8, 0.7); }
         }
 
-        @keyframes textGlow {
-            from { opacity: 0.6; text-shadow: 0 0 10px rgba(192, 132, 252, 0.5); }
-            to { opacity: 1; text-shadow: 0 0 20px rgba(96, 165, 250, 0.9); }
+        @keyframes textBreath {
+            from { opacity: 0.5; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1.02); }
         }
 
         @keyframes fadeOutSplash {
@@ -96,76 +99,130 @@
             100% { opacity: 0; visibility: hidden; }
         }
 
-        /* ================= 正式主界面样式 ================= */
-        .main-content {
+        /* ================= 原版高档测算主界面样式 ================= */
+        .main-wrapper {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            padding: 20px;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
         }
 
-        .container {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 30px;
+        .badge-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: rgba(30, 27, 20, 0.8);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            border-radius: 20px;
+            font-size: 13px;
+            color: #fde047;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #fbbf24;
+            margin: 0 0 8px 0;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 10px rgba(251, 191, 36, 0.4);
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .tips {
+            font-size: 13px;
+            color: #fde047;
+            margin-bottom: 25px;
+            text-shadow: 0 0 8px rgba(253, 224, 71, 0.3);
+        }
+
+        .card {
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(234, 179, 8, 0.3);
             border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            padding: 25px 20px;
             width: 100%;
-            max-width: 360px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            position: relative;
         }
 
-        h2 {
+        .input-group {
             margin-bottom: 20px;
-            color: #f3f4f6;
-            letter-spacing: 2px;
+            text-align: left;
         }
 
-        input {
+        .label-text {
+            font-size: 13px;
+            color: #d1d5db;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-box {
             width: 100%;
             padding: 14px;
-            margin: 12px 0;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid #4b5563;
-            border-radius: 8px;
-            color: white;
-            font-size: 16px;
+            background: rgba(11, 15, 25, 0.9);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            border-radius: 10px;
+            color: #fbbf24;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
             outline: none;
-            transition: border-color 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        input:focus {
-            border-color: #8b5cf6;
+        .input-box:focus {
+            border-color: #fbbf24;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
         }
 
-        button {
+        .pay-btn {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #7c3aed 100%, #2563eb 0%);
-            color: white;
+            padding: 16px;
+            background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+            color: #ffffff;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
-            transition: transform 0.1s, opacity 0.2s;
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+            transition: transform 0.1s;
+            margin-top: 10px;
         }
 
-        button:active {
+        .pay-btn:active {
             transform: scale(0.98);
         }
 
-        #result {
+        .footer-note {
+            margin-top: 18px;
+            font-size: 12px;
+            color: #9ca3af;
+            text-align: center;
+        }
+
+        #result-section {
             margin-top: 20px;
-            font-size: 18px;
+            padding: 15px;
+            background: rgba(20, 83, 45, 0.4);
+            border: 1px solid #22c55e;
+            border-radius: 10px;
+            color: #4ade80;
+            font-size: 16px;
             font-weight: bold;
-            color: #34d399;
+            text-align: center;
+            display: none;
         }
     </style>
 </head>
@@ -177,29 +234,52 @@
             <div class="smoke-ring"></div>
             <div class="smoke-ring"></div>
         </div>
-        <div class="intro-title">天 机 玄 数</div>
+        <div class="intro-text">天 机 玄 数</div>
     </div>
 
-    <!-- 正式测算主界面 -->
-    <div class="main-content">
-        <div class="container">
-            <h2>✨ 天机玄数演练 ✨</h2>
-            <input type="text" id="birthYear" placeholder="输入生辰年份 (例如 1980)">
-            <input type="text" id="idNumber" placeholder="输入识别后4位">
-            
-            <button onclick="startSuanmingPayment()">开启演练测算 (RM 1.68)</button>
-            <div id="result"></div>
+    <!-- 主界面：完美还原原版暗金美学 -->
+    <div class="main-wrapper">
+        <div class="badge-top">
+            ☯ 易经数理 · 密典算法
+        </div>
+        
+        <h1>天机玄数</h1>
+        <div class="subtitle">— 测算个人生辰与专属能量数字 —</div>
+        <div class="tips">✨ 祝您找到专属的最幸运4个号码 ✨</div>
+
+        <div class="card">
+            <div class="input-group">
+                <span class="label-text">【生辰年份】(例如: 1978)</span>
+                <input type="tel" id="birthYear" class="input-box" value="1978" placeholder="请输入年份">
+            </div>
+
+            <div class="input-group">
+                <span class="label-text">【个人专属识别后 4 位】(例如: 6009)</span>
+                <input type="tel" id="idNumber" class="input-box" value="6009" placeholder="请输入后4位">
+            </div>
+
+            <button class="pay-btn" onclick="startSuanmingPayment()">
+                开启演练测算 (RM 1.68 — 一路发)
+            </button>
+
+            <div class="footer-note">
+                🧧 1.68 一路发 · 开启专属幸运磁场 🧧
+            </div>
+
+            <div id="result-section">
+                🔮 专属幸运 4 个数字：<span id="lucky-numbers" style="color: #fff; font-size: 20px;">8 · 3 · 9 · 2</span>
+            </div>
         </div>
     </div>
 
     <script>
-        // 3 秒后自动隐藏开场动画元素（节省手机内存）
+        // 3秒后自动隐藏烟雾开场动画
         setTimeout(() => {
             const splash = document.getElementById('intro-splash');
             if (splash) splash.style.display = 'none';
-        }, 3500);
+        }, 3200);
 
-        // Google Play 内购与测算逻辑
+        // Google Play 官方内购支付逻辑
         async function startSuanmingPayment() {
             const year = document.getElementById('birthYear')?.value;
             const number = document.getElementById('idNumber')?.value;
@@ -209,13 +289,14 @@
                 return;
             }
 
+            // 检查是否在 Google Play 内购环境中
             if ('getDigitalGoodsService' in window) {
                 try {
                     const service = await window.getDigitalGoodsService('https://play.google.com/billing');
                     
                     const paymentMethodData = [{
                         supportedMethods: 'https://play.google.com/billing',
-                        data: { sku: 'tianji_168' } // 对应后台建立的商品 ID
+                        data: { sku: 'tianji_168' } // 对应我们在后台建好的 Product ID
                     }];
                     
                     const paymentDetails = {
@@ -228,23 +309,25 @@
                     const request = new PaymentRequest(paymentMethodData, paymentDetails);
                     const response = await request.show();
 
+                    // 支付成功
                     await response.complete('success');
                     
-                    // 支付成功后展示专属 4 个数字
-                    showLuckyNumbers();
+                    // 显示最终测算结果
+                    showResults();
 
                 } catch (err) {
-                    console.error("支付取消：", err);
+                    console.error("支付取消或失败：", err);
                 }
             } else {
-                // 如果在网页端测试，直接跳过支付看效果
-                showLuckyNumbers();
+                // 如果是在电脑网页或其他环境测试，直接展示结果
+                showResults();
             }
         }
 
-        function showLuckyNumbers() {
-            // 这里替换为你完整的算命算法结果
-            document.getElementById('result').innerText = "🔮 您的专属 4 个数字：8 · 3 · 9 · 2";
+        function showResults() {
+            const resultBox = document.getElementById('result-section');
+            resultBox.style.display = 'block';
+            resultBox.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
