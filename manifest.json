@@ -1,17 +1,14 @@
 {
   "name": "天机玄数",
   "short_name": "天机玄数",
-  "description": "天机玄数 - 易经数理测算",
-  "start_url": "./index.html",
+  "description": "个人生辰数理与能量数字分析系统",
+  "start_url": "/number-app/",
   "display": "standalone",
-  "background_color": "#0b0f19",
-  "theme_color": "#0b0f19",
-  "orientation": "portrait",
-  "version": "1.0.2",
-  "versionCode": 3,
+  "background_color": "#050811",
+  "theme_color": "#050811",
   "icons": [
     {
-      "src": "./icon.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/3229/3229562.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
