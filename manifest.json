@@ -1,20 +1,26 @@
 {
-  "short_name": "MDN",
-  "name": "MDN Web Docs",
+  "name": "天机玄数",
+  "short_name": "天机玄数",
+  "description": "天机玄数 - 易经数理测算",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
+  "orientation": "portrait",
+  "version": "1.0.2",
+  "versionCode": 3,
   "icons": [
     {
-      "src": "/favicon-192x192.png",
+      "src": "./icon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/favicon-512x512.png",
+      "src": "./icon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "black",
-  "background_color": "white"
+  ]
 }
