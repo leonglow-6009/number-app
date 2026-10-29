@@ -6,6 +6,7 @@
   "display": "standalone",
   "background_color": "#0b0f19",
   "theme_color": "#0b0f19",
+  "orientation": "portrait",
   "version": "1.0.2",
   "versionCode": 3,
   "icons": [
