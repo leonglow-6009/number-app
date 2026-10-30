@@ -9,7 +9,15 @@
       %22display%22: %22standalone%22,
       %22background_color%22: %22%230b0f19%22,
       %22theme_color%22: %22%230b0f19%22,
-      %22versionCode%22: 4
+      %22versionCode%22: 5,
+      %22icons%22: [
+        {
+          %22src%22: %22./logo.png%22,
+          %22sizes%22: %22512x512%22,
+          %22type%22: %22image/png%22,
+          %22purpose%22: %22any maskable%22
+        }
+      ]
     }">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,7 +58,7 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            animation: fadeOutSplash 1s ease 3.5s forwards; /* 3.5秒后自动淡出 */
+            animation: fadeOutSplash 1s ease 3.5s forwards;
         }
 
         #smokeCanvas {
@@ -276,17 +284,17 @@
         window.addEventListener('resize', initCanvas);
 
         let particles = [];
-        const smokeCount = 50; // 加大白烟密度
+        const smokeCount = 50;
 
         for (let i = 0; i < smokeCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: canvas.height + Math.random() * 200,
-                radius: Math.random() * 90 + 50, // 增大烟雾半径
+                radius: Math.random() * 90 + 50,
                 speedY: Math.random() * 1.8 + 0.8,
                 speedX: (Math.random() - 0.5) * 1.2,
                 grow: Math.random() * 0.2 + 0.1,
-                alpha: Math.random() * 0.35 + 0.15 // 提升白烟浓度
+                alpha: Math.random() * 0.35 + 0.15
             });
         }
 
@@ -297,7 +305,6 @@
                 p.x += p.speedX;
                 p.radius += p.grow;
 
-                // 打造浓郁柔和的浓白烟团
                 let gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
                 gradient.addColorStop(0, `rgba(255, 255, 255, ${p.alpha})`);
                 gradient.addColorStop(0.4, `rgba(230, 235, 245, ${p.alpha * 0.7})`);
@@ -321,13 +328,11 @@
         }
         animateSmoke();
 
-        // 3.5秒后自动彻底移除烟雾层
         setTimeout(() => {
             const splash = document.getElementById('intro-splash');
             if (splash) splash.remove();
         }, 3600);
 
-        // Google Play 官方内购支付逻辑
         async function startSuanmingPayment() {
             const year = document.getElementById('birthYear')?.value;
             const number = document.getElementById('idNumber')?.value;
@@ -337,14 +342,13 @@
                 return;
             }
 
-            // 严谨检测 Google Play Billing API
             if (window.PaymentRequest && 'getDigitalGoodsService' in window) {
                 try {
                     const service = await window.getDigitalGoodsService('https://play.google.com/billing');
                     
                     const paymentMethodData = [{
                         supportedMethods: 'https://play.google.com/billing',
-                        data: { sku: 'tianji_168' } // 对应我们在后台配置好的商品
+                        data: { sku: 'tianji_168' }
                     }];
                     
                     const paymentDetails = {
@@ -357,7 +361,6 @@
                     const request = new PaymentRequest(paymentMethodData, paymentDetails);
                     const response = await request.show();
 
-                    // 支付成功
                     await response.complete('success');
                     showResults();
 
@@ -365,7 +368,6 @@
                     console.error("支付取消或未完成：", err);
                 }
             } else {
-                // 如果在网页端或其他非客户端环境测试，直接展示结果
                 showResults();
             }
         }
