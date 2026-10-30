@@ -22,76 +22,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <canvas id="wu-xing-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
-    <script>
-// 3D 动态五行/太极粒子背景特效
-const canvas = document.getElementById('wu-xing-bg');
-const ctx = canvas.getContext('2d');
-
-let width, height;
-function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resize);
-resize();
-
-// 创建玄学粒子与五行光点
-const particles = [];
-for (let i = 0; i < 60; i++) {
-    particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * 2 + 1,
-        color: i % 2 === 0 ? 'rgba(245, 158, 11, 0.6)' : 'rgba(59, 130, 246, 0.4)',
-        speedX: (Math.random() - 0.5) * 0.5,
-        speedY: (Math.random() - 0.5) * 0.5,
-        angle: Math.random() * Math.PI
-    });
-}
-
-function animate() {
-    ctx.clearRect(0, 0, width, height);
-    
-    // 绘制深邃背景色
-    ctx.fillStyle = '#080c14';
-    ctx.fillRect(0, 0, width, height);
-
-    // 绘制中心 3D 旋转光晕（模拟五行气场流转）
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const time = Date.now() * 0.001;
-    
-    const gradient = ctx.createRadialGradient(centerX, centerY, 50, centerX, centerY, Math.max(width, height) * 0.7);
-    gradient.addColorStop(0, 'rgba(217, 119, 6, 0.18)');
-    gradient.addColorStop(0.5, 'rgba(15, 23, 42, 0.8)');
-    gradient.addColorStop(1, '#080c14');
-    
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-
-    // 绘制动态流转的粒子
-    particles.forEach(p => {
-        p.x += p.speedX;
-        p.y += p.speedY;
-        
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#f59e0b';
-        ctx.fill();
-    });
-
-    requestAnimationFrame(animate);
-}
-animate();
-</script> }
-
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #080c14;
+            /* 放射发光网格背景，不依赖任何图片文件，纯CSS渲染 */
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(217, 119, 6, 0.25) 0%, rgba(8, 12, 20, 0.98) 70%),
+                linear-gradient(rgba(245, 158, 11, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 158, 11, 0.08) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #f3f4f6;
+            overflow: hidden;
+        }
         /* ================= 3D 浓郁白烟弥漫开场特效层 ================= */
         #intro-splash {
             position: fixed;
