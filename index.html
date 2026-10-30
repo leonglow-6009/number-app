@@ -21,7 +21,11 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #0b0f19;
-            background-image: radial-gradient(circle at 50% 20%, #1a2238 0%, #0b0f19 100%);
+            /* 背景融入阴阳五行八卦微光元素 */
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(26, 34, 56, 0.9) 0%, rgba(11, 15, 25, 0.98) 100%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" opacity="0.07"><circle cx="60" cy="60" r="50" stroke="%23fbbf24" stroke-width="1" fill="none"/><path d="M60 10 L60 110 M10 60 L110 60" stroke="%23fbbf24" stroke-width="0.5"/><text x="54" y="28" fill="%23fbbf24" font-size="11" font-weight="bold">金</text><text x="92" y="64" fill="%23fbbf24" font-size="11" font-weight="bold">木</text><text x="54" y="100" fill="%23fbbf24" font-size="11" font-weight="bold">水</text><text x="18" y="64" fill="%23fbbf24" font-size="11" font-weight="bold">火</text><circle cx="60" cy="60" r="18" stroke="%23fbbf24" stroke-width="0.8" fill="none"/><text x="54" y="64" fill="%23fbbf24" font-size="10">土</text></svg>');
+            background-repeat: repeat;
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -33,7 +37,7 @@
             overflow: hidden;
         }
 
-        /* ================= 3D 动态烟雾弥漫开场特效层 ================= */
+        /* ================= 3D 浓郁白烟弥漫开场特效层 ================= */
         #intro-splash {
             position: fixed;
             top: 0;
@@ -56,6 +60,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
+            opacity: 0.9;
         }
 
         .intro-title-box {
@@ -75,13 +80,14 @@
 
         .intro-sub {
             font-size: 14px;
-            color: #9ca3af;
+            color: #d1d5db;
             letter-spacing: 2px;
             margin-top: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         @keyframes textFloat {
-            0% { transform: translateY(0px) scale(0.98); opacity: 0.8; }
+            0% { transform: translateY(0px) scale(0.98); opacity: 0.85; }
             100% { transform: translateY(-5px) scale(1.02); opacity: 1; }
         }
 
@@ -90,7 +96,7 @@
             100% { opacity: 0; visibility: hidden; pointer-events: none; }
         }
 
-        /* ================= 原版高档暗金测算主界面 ================= */
+        /* ================= 高档暗金测算主界面 ================= */
         .main-wrapper {
             width: 100%;
             max-width: 420px;
@@ -105,13 +111,14 @@
             align-items: center;
             gap: 6px;
             padding: 6px 16px;
-            background: rgba(30, 27, 20, 0.8);
+            background: rgba(30, 27, 20, 0.85);
             border: 1px solid rgba(234, 179, 8, 0.4);
             border-radius: 20px;
             font-size: 13px;
             color: #fde047;
             margin-bottom: 15px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
         }
 
         h1 {
@@ -137,12 +144,13 @@
         }
 
         .card {
-            background: rgba(17, 24, 39, 0.85);
-            border: 1px solid rgba(234, 179, 8, 0.3);
+            background: rgba(17, 24, 39, 0.88);
+            border: 1px solid rgba(234, 179, 8, 0.35);
             border-radius: 16px;
             padding: 25px 20px;
             width: 100%;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
         }
 
         .input-group {
@@ -213,7 +221,7 @@
 </head>
 <body>
 
-    <!-- 3D 动态烟雾弥漫开场特效层 -->
+    <!-- 3D 浓郁白烟弥漫开场特效层 -->
     <div id="intro-splash">
         <canvas id="smokeCanvas"></canvas>
         <div class="intro-title-box">
@@ -222,7 +230,7 @@
         </div>
     </div>
 
-    <!-- 主界面：暗金高端视觉 -->
+    <!-- 主界面：暗金高端视觉与五行微光 -->
     <div class="main-wrapper">
         <div class="badge-top">☯ 易经数理 · 密典算法</div>
         
@@ -256,43 +264,57 @@
     </div>
 
     <script>
-        // 动态 3D 烟雾粒子特效脚本
+        // 浓郁白烟与雾气弥漫 3D Canvas 粒子引擎
         const canvas = document.getElementById('smokeCanvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        initCanvas();
+        window.addEventListener('resize', initCanvas);
 
         let particles = [];
-        for (let i = 0; i < 40; i++) {
+        const smokeCount = 50; // 加大白烟密度
+
+        for (let i = 0; i < smokeCount; i++) {
             particles.push({
-                x: canvas.width / 2 + (Math.random() - 0.5) * 100,
+                x: Math.random() * canvas.width,
                 y: canvas.height + Math.random() * 200,
-                radius: Math.random() * 80 + 40,
-                color: Math.random() > 0.5 ? 'rgba(234, 179, 8, 0.08)' : 'rgba(147, 51, 234, 0.06)',
-                speedY: Math.random() * 2 + 1,
-                speedX: (Math.random() - 0.5) * 1.5
+                radius: Math.random() * 90 + 50, // 增大烟雾半径
+                speedY: Math.random() * 1.8 + 0.8,
+                speedX: (Math.random() - 0.5) * 1.2,
+                grow: Math.random() * 0.2 + 0.1,
+                alpha: Math.random() * 0.35 + 0.15 // 提升白烟浓度
             });
         }
 
         function animateSmoke() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
-                ctx.beginPath();
+                p.y -= p.speedY;
+                p.x += p.speedX;
+                p.radius += p.grow;
+
+                // 打造浓郁柔和的浓白烟团
                 let gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-                gradient.addColorStop(0, p.color);
-                gradient.addColorStop(1, 'rgba(0,0,0,0)');
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${p.alpha})`);
+                gradient.addColorStop(0.4, `rgba(230, 235, 245, ${p.alpha * 0.7})`);
+                gradient.addColorStop(0.8, `rgba(200, 210, 225, ${p.alpha * 0.2})`);
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
                 ctx.fillStyle = gradient;
+                ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                 ctx.fill();
 
-                p.y -= p.speedY;
-                p.x += p.speedX;
-                p.radius += 0.3; // 烟雾扩散效果
-
-                if (p.y < -100) {
-                    p.y = canvas.height + 50;
-                    p.x = canvas.width / 2 + (Math.random() - 0.5) * 150;
-                    p.radius = Math.random() * 80 + 40;
+                if (p.y < -120 || p.radius > 260) {
+                    p.y = canvas.height + 60;
+                    p.x = Math.random() * canvas.width;
+                    p.radius = Math.random() * 90 + 50;
+                    p.grow = Math.random() * 0.2 + 0.1;
+                    p.alpha = Math.random() * 0.35 + 0.15;
                 }
             });
             requestAnimationFrame(animateSmoke);
