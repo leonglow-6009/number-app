@@ -329,7 +329,7 @@
             if (splash) splash.remove();
         }, 3600);
 
-       async function startSuanmingPayment() {
+      async function startSuanmingPayment() {
     const year = document.getElementById('birthYear')?.value;
     const number = document.getElementById('idNumber')?.value;
 
@@ -337,7 +337,8 @@
         alert("请先填写生辰年份和识别后4位！");
         return;
     }
-           // === 把这段代码贴在中间的空白行 ===
+
+    // === 动态计算 4 个幸运数字并展示 ===
     const yNum = parseInt(year) || 2000;
     const idNum = parseInt(number) || 6009;
     
@@ -346,17 +347,43 @@
     const n3 = (yNum + idNum * 7) % 10;
     const n4 = (Math.abs(yNum - idNum)) % 10;
     
-    const calculatedResult = ${n1} - ${n2} - ${n3} - ${n4};
+    const calculatedResult = `${n1} · ${n2} · ${n3} · ${n4}`;
     
-    const resultElement = document.getElementById('luckResult'); 
+    const resultElement = document.getElementById('result-section'); 
     if (resultElement) {
-        resultElement.innerText = calculatedResult;
+        resultElement.innerHTML = `🔮 专属幸运 4 个数字：<span style="color: #fff; font-size: 20px;">${calculatedResult}</span>`;
     }
     // ===================================
 
-            if (window.PaymentRequest && 'getDigitalGoodsService' in window) {
-                try {
-                    const service = await window.getDigitalGoodsService('https://play.google.com/billing');
+    if (window.PaymentRequest && 'getDigitalGoodsService' in window) {
+        try {
+            const service = await window.getDigitalGoodsService('https://play.google.com/billing');
+            
+            const paymentMethodData = [{
+                supportedMethods: 'https://play.google.com/billing',
+                data: { sku: 'tianji_168' }
+            }];
+            
+            const paymentDetails = {
+                total: {
+                    label: '天机玄数演练测算',
+                    amount: { currency: 'MYR', value: '1.68' }
+                }
+            };
+
+            const request = new PaymentRequest(paymentMethodData, paymentDetails);
+            const response = await request.show();
+
+            await response.complete('success');
+            showResults();
+
+        } catch (err) {
+            console.error("支付取消或未完成：", err);
+        }
+    } else {
+        showResults();
+    }
+}
                     
                     const paymentMethodData = [{
                         supportedMethods: 'https://play.google.com/billing',
