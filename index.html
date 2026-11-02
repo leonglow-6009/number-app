@@ -329,14 +329,30 @@
             if (splash) splash.remove();
         }, 3600);
 
-        async function startSuanmingPayment() {
-            const year = document.getElementById('birthYear')?.value;
-            const number = document.getElementById('idNumber')?.value;
+       async function startSuanmingPayment() {
+    const year = document.getElementById('birthYear')?.value;
+    const number = document.getElementById('idNumber')?.value;
 
-            if (!year || !number) {
-                alert("请先填写生辰年份和识别后4位！");
-                return;
-            }
+    if (!year || !number) {
+        alert("请先填写生辰年份和识别后4位！");
+        return;
+    }
+           // === 把这段代码贴在中间的空白行 ===
+    const yNum = parseInt(year) || 2000;
+    const idNum = parseInt(number) || 6009;
+    
+    const n1 = (yNum + idNum) % 10;
+    const n2 = (yNum * 3 + idNum) % 10;
+    const n3 = (yNum + idNum * 7) % 10;
+    const n4 = (Math.abs(yNum - idNum)) % 10;
+    
+    const calculatedResult = ${n1} - ${n2} - ${n3} - ${n4};
+    
+    const resultElement = document.getElementById('luckResult'); 
+    if (resultElement) {
+        resultElement.innerText = calculatedResult;
+    }
+    // ===================================
 
             if (window.PaymentRequest && 'getDigitalGoodsService' in window) {
                 try {
