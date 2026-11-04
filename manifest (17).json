@@ -1,0 +1,9 @@
+{
+  "name": "天机玄数",
+  "short_name": "天机玄数",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
+  "versionCode": 3
+}
