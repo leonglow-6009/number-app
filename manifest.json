@@ -1,7 +1,7 @@
 {
   "name": "天机玄数",
   "short_name": "天机玄数",
-  "start_url": "[https://leonglow-6009.github.io/number-app/index.html]",
+  "start_url": "https://leonglow-6009.github.io/number-app/index.html",
   "display": "standalone",
   "background_color": "#0b0f19",
   "theme_color": "#0b0f19",
