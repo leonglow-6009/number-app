@@ -2,7 +2,7 @@
   "name": "TianJi Studio",
   "short_name": "TianJi",
   "description": "天机玄数 - 智能应用",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1b1d22",
