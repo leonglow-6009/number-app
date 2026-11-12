@@ -3,6 +3,7 @@
   "short_name": "天机玄数",
   "description": "天机玄数 - 智能应用",
   "start_url": "/number-app/index.html",
+  "scope": "/number-app/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1bfd22",
