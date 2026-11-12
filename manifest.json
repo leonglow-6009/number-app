@@ -9,12 +9,6 @@
   "theme_color": "#1bfd22",
   "icons": [
     {
-      "src": "/number-app/logo.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
       "src": "/number-app/512.png",
       "sizes": "512x512",
       "type": "image/png",
