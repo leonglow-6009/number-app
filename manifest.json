@@ -1,23 +1,25 @@
 {
-  "name": "TianJi Studio",
-  "short_name": "TianJi",
+  "name": "天机玄数",
+  "short_name": "天机玄数",
   "description": "天机玄数 - 智能应用",
-  "start_url": "./index.html",
+  "start_url": "/number-app/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#1b1d22",
+  "theme_color": "#1bfd22",
   "icons": [
     {
-      "src": "./logo.png",
+      "src": "/number-app/logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "./512.png",
+      "src": "/number-app/512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "dir": "auto",
+  "lang": "zh"
 }
