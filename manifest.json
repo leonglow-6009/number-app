@@ -2,7 +2,7 @@
   "name": "天机玄数",
   "short_name": "天机玄数",
   "description": "天机玄数 - 智能应用",
-  "start_url": "/number-app/index.html",
+  "start_url": "https://leonglow-6009.github.io/number-app/",
   "scope": "/number-app/",
   "display": "standalone",
   "background_color": "#ffffff",
